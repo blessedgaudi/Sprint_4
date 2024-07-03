@@ -9,42 +9,24 @@ public class OrderTest extends BaseTest {
 
     @Test
     public void checkingOrderMethodDown() {
-        page = new OrderPage(driver);
-
-        page.getCookieButton().click();
-        page.scrollDown();
-        page.getOrderDown().click();
-
-        page.getName().sendKeys("Гарри");
-        page.getSurname().sendKeys("Поттер");
-        page.getAdress().sendKeys("г. Хогвартс, ул. Дамблдора , д.12");
-        page.getStation().sendKeys("Дубровка");
-        page.getStation().sendKeys(Keys.ARROW_DOWN);
-        page.getStation().sendKeys(Keys.ENTER);
-
-        page.getTelephone().sendKeys("+79854536885");
-
-        page.getNext().click();
-
-        page.getWhenToDeliver().sendKeys("31.07.2024");
-        page.getWhenToDeliver().sendKeys(Keys.ENTER);
-        page.getRentTerm().click();
-        page.getSelectRentTerm().click();
-        page.getBlackPerl().click();
-        page.getComment().sendKeys("Положите волшебную палочку");
-
-        page.getFinalOrder().click();
-
-        page.getMakeOrderYes().click();
-
-        assertTrue(page.getSuccessOrder().isDisplayed());
+        commonTest(true);
     }
 
     @Test
     public void checkingOrderMethodUp() {
+        commonTest(false);
+    }
+
+    private void commonTest(Boolean isDownButton) {
         page = new OrderPage(driver);
         page.getCookieButton().click();
-        page.getOrderUp().click();
+
+        if (isDownButton) {
+            page.scrollDown();
+            page.getOrderDown().click();
+        } else {
+            page.getOrderUp().click();
+        }
 
         page.getName().sendKeys("Альбус");
         page.getSurname().sendKeys("Дамблдор");
